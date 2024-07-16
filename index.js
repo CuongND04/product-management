@@ -1,5 +1,5 @@
 const express = require("express");
-const multer = require("multer");
+const path = require("path");
 var flash = require("express-flash");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -30,6 +30,13 @@ app.use(cookieParser("keyboard cat"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 //END Flash
+
+// TinyCME
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+// END TinyCME
 
 // App local variable: sử dụng được ở all file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
