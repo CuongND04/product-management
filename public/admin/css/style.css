@@ -13,7 +13,7 @@
   color: #fff;
 }
 
-.body .slider {
+.body .sider {
   width: 150px;
   background-color: #323232;
   color: #fff;
@@ -30,13 +30,13 @@
   width: calc(100% - 180px);
 }
 
-.slider .inner-menu ul {
+.sider .inner-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.slider .inner-menu ul li a {
+.sider .inner-menu ul li a {
   color: #fff;
   display: block;
   padding: 6px 10px;
