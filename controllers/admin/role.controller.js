@@ -57,6 +57,39 @@ module.exports.editPatch = async (req, res) => {
   } catch (error) {
     req.flash("error", `Cập nhật nhóm quyền không thành công!`);
   }
+  res.redirect("back");
+};
+
+// [GET] /admin/roles/permissions
+module.exports.permissions = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+  const records = await Role.find(find);
+
+  res.render("admin/pages/roles/permissions", {
+    pageTitle: "Phân quyền",
+    records: records,
+  });
+};
+
+// [PATCH] /admin/roles/permissions
+module.exports.permissionsPatch = async (req, res) => {
+  const roles = JSON.parse(req.body.roles); // json to js
+
+  for (const item of roles) {
+    await Role.updateOne(
+      {
+        _id: item.id,
+        deleted: false,
+      },
+      {
+        permissions: item.permissions,
+      }
+    );
+  }
+
+  req.flash("success", "Cập nhật phân quyền thành công!");
 
   res.redirect("back");
 };
