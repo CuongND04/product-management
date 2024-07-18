@@ -5,6 +5,8 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
+
 var md5 = require("md5");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -50,6 +52,15 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
+
+  for (const product of products) {
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id,
+    });
+    if (user) {
+      product.accountFullName = user.fullName;
+    }
+  }
 
   // xuất ra template của routes
   res.render("admin/pages/products/index.pug", {
@@ -152,7 +163,6 @@ module.exports.create = async (req, res) => {
   });
 };
 // [POST] /admin/products/create
-
 module.exports.createPost = async (req, res) => {
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -166,6 +176,9 @@ module.exports.createPost = async (req, res) => {
   if (req.file) {
     req.thumbnail = `/uploads/${req.file.filename}`;
   }
+  req.body.createdBy = {
+    account_id: res.locals.user.id,
+  };
 
   const record = new Product(req.body);
   await record.save();

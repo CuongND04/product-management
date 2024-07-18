@@ -7,7 +7,7 @@ var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 require("dotenv").config();
 const database = require("./config/database");
-
+var moment = require("moment"); // chuyển Date thành giờ
 const systemConfig = require("./config/system");
 
 const routeAdmin = require("./routes/admin/index.route");
@@ -42,6 +42,8 @@ app.use(
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 app.use(express.static(`${__dirname}/public`));
+
+app.locals.moment = moment;
 
 routeAdmin(app);
 route(app);
