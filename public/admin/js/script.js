@@ -172,6 +172,7 @@ if (uploadImage) {
   });
 }
 // END Upload image
+
 // Sort
 const sort = document.querySelector("[sort]");
 if (sort) {
