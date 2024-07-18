@@ -5,7 +5,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
 const ProductCategory = require("../../models/product-category.model");
-
+var md5 = require("md5");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
   // tạo cái mảng để duyệt mà tạo ra các nút bộ lọc
