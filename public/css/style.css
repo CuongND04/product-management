@@ -59,6 +59,18 @@
   object-fit: cover;
 }
 
+.product-item .inner-featured {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: green;
+  color: white;
+  padding: 3px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
 .product-item .inner-content {
   padding: 15px;
 }
