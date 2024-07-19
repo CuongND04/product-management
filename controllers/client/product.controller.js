@@ -13,7 +13,6 @@ module.exports.index = async (req, res) => {
     );
     return item;
   });
-  console.log(newProducts);
   res.render("client/pages/products/index", {
     pageTitle: "ProductList",
     products: newProducts, // trả về danh sách sản phẩm

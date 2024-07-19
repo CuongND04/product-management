@@ -79,12 +79,12 @@ module.exports.edit = async (req, res) => {
 // [PATCH] /admin/accounts/edit/:id
 module.exports.editPatch = async (req, res) => {
   try {
+    const id = req.params.id; // đây là id của thằng cần chỉnh sửa không phải user
     const existEmail = await Account.findOne({
       _id: { $ne: id },
       email: req.body.email,
       deleted: false,
     });
-
     if (existEmail) {
       req.flash("error", "Email đã tồn tại!");
       res.redirect("back");
