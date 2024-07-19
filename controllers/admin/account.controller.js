@@ -79,6 +79,17 @@ module.exports.edit = async (req, res) => {
 // [PATCH] /admin/accounts/edit/:id
 module.exports.editPatch = async (req, res) => {
   try {
+    const existEmail = await Account.findOne({
+      _id: { $ne: id },
+      email: req.body.email,
+      deleted: false,
+    });
+
+    if (existEmail) {
+      req.flash("error", "Email đã tồn tại!");
+      res.redirect("back");
+      return;
+    }
     if (req.body.password) {
       req.body.password = md5(req.body.password);
     } else {

@@ -60,17 +60,5 @@ module.exports.editPatch = async (req, res, next) => {
 
   const id = req.params.id;
 
-  const existEmail = await Account.findOne({
-    _id: { $ne: id },
-    email: req.body.email,
-    deleted: false,
-  });
-
-  if (existEmail) {
-    req.flash("error", "Email đã tồn tại!");
-    res.redirect("back");
-    return;
-  }
-
   next();
 };
