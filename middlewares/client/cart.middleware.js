@@ -1,4 +1,4 @@
-const Cart = require("../../models/card.model");
+const Cart = require("../../models/cart.model");
 
 module.exports.cart = async (req, res, next) => {
   if (!req.cookies.cartId) {
