@@ -16,4 +16,15 @@ if (showAlert) {
     showAlert.classList.add("alert-hidden");
   });
 }
-// End show-alert
+// END show-alert
+
+// Button Go Back
+const buttonsGoBack = document.querySelectorAll("[button-go-back]");
+if (buttonsGoBack.length > 0) {
+  buttonsGoBack.forEach((button) => {
+    button.addEventListener("click", () => {
+      history.back();
+    });
+  });
+}
+// END Button Go Back
