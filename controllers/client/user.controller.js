@@ -36,7 +36,6 @@ module.exports.registerPost = async (req, res) => {
 
 // [GET] /user/login
 module.exports.login = async (req, res) => {
-  console.log(req.body);
   res.render("client/pages/user/login", {
     pageTitle: "Đăng nhập tài khoản",
   });
