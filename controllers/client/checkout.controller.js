@@ -98,13 +98,11 @@ module.exports.success = async (req, res) => {
       product.title = productInfo.title;
       product.thumbnail = productInfo.thumbnail;
 
-      product.priceNew = productHelper.priceNewProduct(productInfo).priceNew;
+      product.priceNew = productHelper.priceNewProduct(product).priceNew;
 
       product.totalPrice = product.priceNew * product.quantity;
-
       order.totalPrice += product.totalPrice;
     }
-
     res.render("client/pages/checkout/success", {
       pageTitle: "Đặt hàng thành công",
       order: order,
