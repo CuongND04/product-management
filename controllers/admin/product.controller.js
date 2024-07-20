@@ -195,7 +195,6 @@ module.exports.create = async (req, res) => {
   };
   const category = await ProductCategory.find(find);
   const newCategory = createTreeHelper.tree(category);
-
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới sản phẩm",
     category: newCategory,
