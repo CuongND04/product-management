@@ -8,7 +8,8 @@ module.exports.cart = async (req, res, next) => {
     res.cookie("cartId", cart.id, {
       expires: new Date(Date.now() + expiresTime),
     });
-  } else {
+  }
+  if (req.cookies.cartId) {
     const cart = await Cart.findOne({
       _id: req.cookies.cartId,
     });

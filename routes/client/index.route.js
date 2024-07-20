@@ -6,6 +6,7 @@ const checkoutRoutes = require("./checkout.route");
 
 const categoryMiddleware = require("../../middlewares/client/category.middleware");
 const cartMiddleware = require("../../middlewares/client/cart.middleware");
+
 module.exports = (app) => {
   app.use(categoryMiddleware.category); // cái nào ở dưới cũng chạy qua cái này
   app.use(cartMiddleware.cart); // cái nào ở dưới cũng chạy qua cái này
