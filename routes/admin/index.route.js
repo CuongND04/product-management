@@ -7,6 +7,7 @@ const accountRoutes = require("./account.route");
 const authRoutes = require("./auth.route");
 const authMiddleware = require("../../middlewares/admin/auth.middleware");
 const myAccountRoutes = require("./my-account.route.js");
+const settingRoutes = require("./setting.route");
 
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
@@ -36,4 +37,6 @@ module.exports = (app) => {
     authMiddleware.requireAuth,
     myAccountRoutes
   );
+
+  app.use(PATH_ADMIN + "/settings", authMiddleware.requireAuth, settingRoutes);
 };
