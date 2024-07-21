@@ -1,0 +1,21 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Thông tin tài khoản")
+
+    if (infoUser.fullName)
+      p Họ tên: <b>#{infoUser.fullName}</b>
+
+    if (infoUser.email)
+      p Email: <b>#{infoUser.email}</b>
+
+    if (infoUser.status)
+      p Trạng thái: 
+        if infoUser.status == "active" 
+          <b> "Hoạt động" </b>
+        else 
+          <b> "Không hoạt động" </b>
