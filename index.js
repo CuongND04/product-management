@@ -10,6 +10,9 @@ const database = require("./config/database");
 var moment = require("moment"); // chuyển Date thành giờ
 const systemConfig = require("./config/system");
 
+const { Server } = require("socket.io");
+const http = require("http");
+
 const routeAdmin = require("./routes/admin/index.route");
 const route = require("./routes/client/index.route");
 
@@ -24,6 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+
+// Socket IO
+const server = http.createServer(app);
+const io = new Server(server);
+io.on("connection", (socket) => {
+  console.log("Có 1 user kết nối");
+});
+// End SocketIO
 
 //Flash
 app.use(cookieParser("keyboard cat"));
@@ -53,6 +64,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
