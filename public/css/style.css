@@ -262,6 +262,7 @@
 .chat .inner-body {
   padding: 10px;
   max-height: 450px;
+  min-height: 200px;
   overflow-y: auto;
 }
 
