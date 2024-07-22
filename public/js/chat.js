@@ -20,9 +20,13 @@ if (formSendData) {
     const images = upload.cachedFileArray || [];
 
     if (content || images.length > 0) {
-      socket.emit("CLIENT_SEND_MESSAGE", content);
+      socket.emit("CLIENT_SEND_MESSAGE", {
+        content: content,
+        images: images,
+      });
       formSendData.content.value = "";
       // đề ẩn typing immediate khi submit
+      upload.resetPreviewPanel();
       socket.emit("CLIENT_SEND_TYPING", "hidden");
     }
   });
@@ -38,7 +42,8 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   const div = document.createElement("div");
 
   let htmlFullName = "";
-
+  let htmlContent = "";
+  let htmlImages = "";
   if (myId == data.user_id) {
     div.classList.add("inner-outgoing");
   } else {
@@ -46,9 +51,24 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
   }
 
+  if (data.content) {
+    htmlContent = `<div class="inner-content">${data.content}</div>`;
+  }
+  if (data.images.length > 0) {
+    htmlImages += `<div class="inner-images">`;
+
+    data.images.forEach((image) => {
+      htmlImages += `
+        <img src="${image}">
+      `;
+    });
+
+    htmlImages += `</div>`;
+  }
   div.innerHTML = `
     ${htmlFullName}
-    <div class="inner-content">${data.content}</div>
+    ${htmlContent}
+    ${htmlImages}
   `;
 
   body.insertBefore(div, boxTyping);
