@@ -123,7 +123,7 @@ if (emojiPicker) {
     showTyping();
   });
 
-  inputChat.addEventListener("keyup", () => {
+  inputChat.addEventListener("keydown", () => {
     showTyping();
   });
 }
