@@ -1,5 +1,15 @@
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
 
+// Upload Images
+const upload = new FileUploadWithPreview.FileUploadWithPreview(
+  "upload-images",
+  {
+    multiple: true,
+    maxFileCount: 6,
+  }
+);
+// End Upload Images
+
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
 
@@ -7,8 +17,9 @@ if (formSendData) {
   formSendData.addEventListener("submit", (event) => {
     event.preventDefault();
     const content = formSendData.content.value; // name ô input là content
+    const images = upload.cachedFileArray || [];
 
-    if (content) {
+    if (content || images.length > 0) {
       socket.emit("CLIENT_SEND_MESSAGE", content);
       formSendData.content.value = "";
       // đề ẩn typing immediate khi submit
