@@ -69,6 +69,30 @@ module.exports = (res) => {
         );
       });
       // Hết Khi A hủy gửi yêu cầu cho B
+
+      // Khi A từ chối kết bạn của B
+      socket.on("CLIENT_REFUSE_FRIEND", async (userIdB) => {
+        // Xóa id của B trong acceptFriends của A
+        await User.updateOne(
+          {
+            _id: userIdA,
+          },
+          {
+            $pull: { acceptFriends: userIdB },
+          }
+        );
+
+        // Xóa id của A trong requestFriends của B
+        await User.updateOne(
+          {
+            _id: userIdB,
+          },
+          {
+            $pull: { requestFriends: userIdA },
+          }
+        );
+      });
+      // Hết Khi A từ chối kết bạn của B
     });
   } catch (error) {
     console.log(error);
