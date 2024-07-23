@@ -10,8 +10,6 @@ module.exports.notFriend = async (req, res) => {
   const userId = res.locals.user.id;
   const requestFriends = res.locals.user.requestFriends;
   const acceptFriends = res.locals.user.acceptFriends;
-  console.log(`requestFriends = ${requestFriends}`);
-  console.log(`acceptFriends = ${acceptFriends}`);
   const users = await User.find({
     $and: [
       { _id: { $ne: userId } }, // not equal
@@ -25,4 +23,30 @@ module.exports.notFriend = async (req, res) => {
     pageTitle: "Danh sách người dùng",
     users: users,
   });
+};
+
+// [GET] /users/request
+module.exports.request = async (req, res) => {
+  try {
+    // SocketIO
+    usersSocket(res);
+    // End SocketIO
+
+    // tìm danh sách lời mời đã gửi của tài khoản đang đăng nhập
+    const requestFriends = res.locals.user.requestFriends;
+
+    // tìm tất cả thằng bạn trong danh sách lời mời đã gửi
+    const users = await User.find({
+      _id: { $in: requestFriends },
+      status: "active",
+      deleted: false,
+    }).select("id avatar fullName");
+
+    res.render("client/pages/users/request", {
+      pageTitle: "Lời mời đã gửi",
+      users: users,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
