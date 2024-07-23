@@ -87,9 +87,7 @@ module.exports.friends = async (req, res) => {
     _id: { $in: friendsList },
     status: "active",
     deleted: false,
-  }).select("avatar fullName");
-
-  console.log(users);
+  }).select("avatar fullName statusOnline");
 
   res.render("client/pages/users/friends", {
     pageTitle: "Danh sách bạn bè",
