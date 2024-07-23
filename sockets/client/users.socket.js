@@ -77,6 +77,15 @@ module.exports = (res) => {
             $pull: { requestFriends: userIdB },
           }
         );
+        // Cập nhật độ dài lời mời của B trả về cho B
+        const infoB = await User.findOne({
+          _id: userIdB,
+        });
+        const lengthAcceptFriends = infoB.acceptFriends.length;
+        socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+          userId: userIdB,
+          lengthAcceptFriends: lengthAcceptFriends,
+        });
       });
       // Hết Khi A hủy gửi yêu cầu cho B
 
@@ -85,23 +94,24 @@ module.exports = (res) => {
         // Xóa id của B trong acceptFriends của A
         await User.updateOne(
           {
-            _id: userIdA,
+            _id: userIdB,
           },
           {
-            $pull: { acceptFriends: userIdB },
+            $pull: { acceptFriends: userIdA },
           }
         );
 
         // Xóa id của A trong requestFriends của B
         await User.updateOne(
           {
-            _id: userIdB,
+            _id: userIdA,
           },
           {
-            $pull: { requestFriends: userIdA },
+            $pull: { requestFriends: userIdB },
           }
         );
       });
+
       // Hết Khi A từ chối kết bạn của B
 
       // Khi A chấp nhận kết bạn của B
