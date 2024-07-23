@@ -175,3 +175,18 @@ socket.on("SERVER_RETURN_USER_ID_CANCEL_FRIEND", (data) => {
   }
 });
 // END SERVER_RETURN_USER_ID_CANCEL_FRIEND
+
+// SERVER_RETURN_STATUS_ONLINE
+socket.on("SERVER_RETURN_STATUS_ONLINE", (data) => {
+  // lấy ra thằng cha chứa tất cả box friend
+  const dataUsersFriend = document.querySelector("[data-users-friend]");
+  if (dataUsersFriend) {
+    // tìm thằng box có id như được gửi lên
+    const boxUser = dataUsersFriend.querySelector(`[user-id="${data.userId}"]`);
+    if (boxUser) {
+      const boxInnerStatus = boxUser.querySelector(".inner-status");
+      boxInnerStatus.setAttribute("status", data.statusOnline);
+    }
+  }
+});
+// End SERVER_RETURN_STATUS_ONLINE
