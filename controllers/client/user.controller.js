@@ -197,7 +197,6 @@ module.exports.info = async (req, res) => {
     tokenUser: req.cookies.tokenUser,
     deleted: false,
   }).select("-password");
-  console.log(infoUser);
   res.render("client/pages/user/info", {
     pageTitle: "Thông tin tài khoản",
     infoUser: infoUser,
