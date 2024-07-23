@@ -53,6 +53,16 @@ module.exports = (res) => {
           userId: userIdB,
           lengthAcceptFriends: lengthAcceptFriends,
         });
+
+        // Lấy thông tin của A để trả về cho B
+        const infoUserA = await User.findOne({
+          _id: userIdA,
+        }).select("fullName avatar");
+
+        socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIEND", {
+          userIdB: userIdB,
+          infoUserA: infoUserA,
+        });
       });
       // Hết Khi A gửi yêu cầu cho B
 
@@ -94,20 +104,20 @@ module.exports = (res) => {
         // Xóa id của B trong acceptFriends của A
         await User.updateOne(
           {
-            _id: userIdB,
+            _id: userIdA,
           },
           {
-            $pull: { acceptFriends: userIdA },
+            $pull: { acceptFriends: userIdB },
           }
         );
 
         // Xóa id của A trong requestFriends của B
         await User.updateOne(
           {
-            _id: userIdA,
+            _id: userIdB,
           },
           {
-            $pull: { requestFriends: userIdB },
+            $pull: { requestFriends: userIdA },
           }
         );
       });
