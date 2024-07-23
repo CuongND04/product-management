@@ -14,8 +14,8 @@ const userSchema = new mongoose.Schema(
         room_chat_id: String,
       },
     ],
-    acceptFriends: Array,
-    requestFriends: Array,
+    acceptFriends: Array, // Lời mời nhận được
+    requestFriends: Array, // Lời mời gửi đi
     status: {
       type: String,
       default: "active",
