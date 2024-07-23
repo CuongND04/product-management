@@ -7,10 +7,11 @@ block main
     .row
       .col-12
         +box-head("Danh sách người dùng")
-
-    .row
+    //- đây là user đang đăng nhập, biến local lấy được từ middleware
+    .row(data-users-not-friend=user.id)
       each user in users
-        .col-6
+        //- user ở đây là thằng trong vòng lặp
+        .col-6(user-id=user.id)
           div(class="box-user")
             div(class="inner-avatar")
               img(

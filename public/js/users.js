@@ -81,6 +81,7 @@ socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
 
 // SERVER_RETURN_INFO_ACCEPT_FRIEND
 socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
+  // trang lời mời kết bạn
   const dataUsersAccept = document.querySelector(
     `[data-users-accept="${data.userIdB}"]`
   );
@@ -137,6 +138,22 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
     const btnAcceptFriend = newBoxUser.querySelector("[btn-accept-friend]");
     acceptUser(btnAcceptFriend);
   }
+  // Hết trang lời mời kết bạn
+
+  // Trang danh sách người dùng
+  const dataUsersNotFriend = document.querySelector(
+    `[data-users-not-friend="${data.userIdB}"]`
+  );
+  if (dataUsersNotFriend) {
+    // tìm box thằng A trong chỗ người không phải bạn, A là thằng gửi lời mời ấy
+    const boxUserA = dataUsersNotFriend.querySelector(
+      `[user-id="${data.infoUserA._id}"]`
+    );
+    if (boxUserA) {
+      dataUsersNotFriend.removeChild(boxUserA);
+    }
+  }
+  // END Trang danh sách người dùng
 });
 // End SERVER_RETURN_INFO_ACCEPT_FRIEND
 
