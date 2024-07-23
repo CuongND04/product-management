@@ -87,7 +87,7 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
   if (dataUsersAccept) {
     const newBoxUser = document.createElement("div");
     newBoxUser.classList.add("col-6");
-
+    newBoxUser.setAttribute("user-id", data.infoUserA._id); // đặt id phân biệt
     newBoxUser.innerHTML = `
       <div class="box-user">
         <div class="inner-avatar">
@@ -139,3 +139,22 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
   }
 });
 // End SERVER_RETURN_INFO_ACCEPT_FRIEND
+
+// SERVER_RETURN_USER_ID_CANCEL_FRIEND
+// giả định là A gửi lời mời kết bạn, rồi A hủy
+socket.on("SERVER_RETURN_USER_ID_CANCEL_FRIEND", (data) => {
+  // đây là khung chứa những thằng gửi lời mời kết bạn đến B
+  const dataUsersAccept = document.querySelector(
+    `[data-users-accept="${data.userIdB}"]`
+  );
+  if (dataUsersAccept) {
+    // tìm đến chỗ thằng A gửi lời mời kết bạn
+    const boxUserA = dataUsersAccept.querySelector(
+      `[user-id="${data.userIdA}"]`
+    );
+    if (boxUserA) {
+      dataUsersAccept.removeChild(boxUserA);
+    }
+  }
+});
+// END SERVER_RETURN_USER_ID_CANCEL_FRIEND
