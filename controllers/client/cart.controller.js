@@ -7,8 +7,8 @@ module.exports.index = async (req, res) => {
   const cart = await Cart.findOne({
     _id: req.cookies.cartId,
   });
+  if (cart) cart.totalPrice = 0; // thêm thuộc tính tổng giá trị
 
-  cart.totalPrice = 0; // thêm thuộc tính tổng giá trị
   // cart.products là một mảng chứa các sản phẩm, mỗi item là một sản phẩm
   for (const item of cart.products) {
     const infoProduct = await Product.findOne({
