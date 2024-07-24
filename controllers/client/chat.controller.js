@@ -3,14 +3,16 @@ const User = require("../../models/user.model");
 const chatSocket = require("../../sockets/client/chat.socket");
 const uploadToCloudinary = require("../../helpers/uploadToCloudinary");
 
-// [GET] /chat/
+// [GET] /chat/:roomChatId
 module.exports.index = async (req, res) => {
+  const roomChatId = req.params.roomChatId;
   // SocketIO
-  chatSocket(res);
+  chatSocket(req, res);
   // END SocketIO
 
   // Get data from database
   const chats = await Chat.find({
+    room_chat_id: roomChatId,
     deleted: false,
   });
   for (chat of chats) {

@@ -94,10 +94,8 @@ module.exports.friends = async (req, res) => {
     const info = res.locals.user.friendsList.find(
       (userFriend) => userFriend.user_id == user.id
     );
-    console.log(info);
     user.roomChatId = info.room_chat_id;
   });
-
   res.render("client/pages/users/friends", {
     pageTitle: "Danh sách bạn bè",
     users: users,
