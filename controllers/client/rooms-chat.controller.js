@@ -2,8 +2,17 @@ const User = require("../../models/user.model");
 const RoomChat = require("../../models/rooms-chat.model");
 // [GET] /rooms-chat/
 module.exports.index = async (req, res) => {
+  const userId = res.locals.user.id;
+
+  const listRoomChat = await RoomChat.find({
+    "users.user_id": userId,
+    typeRoom: "group",
+    deleted: false,
+  });
+
   res.render("client/pages/rooms-chat/index", {
     pageTitle: "Danh sách phòng",
+    listRoomChat: listRoomChat,
   });
 };
 // [GET] /rooms-chat/create
@@ -35,18 +44,19 @@ module.exports.createPost = async (req, res) => {
     users: [],
   };
   // nhập dữ liệu người tham gia
-  usersId.forEach((userId) => {
-    dataRoomChat.users.push({
-      user_id: userId,
-      role: "user",
+  if (usersId.length > 0) {
+    usersId.forEach((userId) => {
+      dataRoomChat.users.push({
+        user_id: userId,
+        role: "user",
+      });
     });
-  });
+  }
   // nhập dữ liệu thằng tạo ra phòng
   dataRoomChat.users.push({
     user_id: res.locals.user.id,
     role: "superAdmin",
   });
-  console.log(`dataRoomChat = ${dataRoomChat}`);
   const roomChat = new RoomChat(dataRoomChat);
   await roomChat.save();
 
